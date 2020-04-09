@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/modal.css">
+  <title>Rock, Paper, Scissors</title>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-header">
+          <!-- logo? -->
+          <div class="img-container">
+            <img src="./img/logo.svg" alt="" class="logo-img">
+          </div>
+
+          <!-- <h1>Rock Paper Scissors</h1> -->
+
+
+          <!-- scoreboard -->
+          <div id="score" class="score">
+            <div class="player-card">
+              <h2 class="score-header">Score</h2>
+              <p class="player-score">0</p>
+            </div>
+            <!-- <div class="computer-card">
+        <h2>Computer</h2>
+        <p class="computer-score">0</p>
+      </div> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </header>
+
+
+  <main class="game">
+
+    <section id="choices" class="choices">
+      <div class="container">
+
+        <!-- Paper/Scissors row -->
+        <div class="row">
+          <div class="col paper-scissors-selection">
+            <div class="paper-coin mr-x">
+              <img id="paper" class="choice img-50" src="./img/icon-paper.svg">
+            </div>
+            <div class="scissors-coin">
+              <img id="scissors" class="choice img-50" src="./img/icon-scissors.svg">
+            </div>
+          </div>
+        </div>
+
+        <!-- Rock row -->
+        <div class="row">
+          <div class="col rock-selection pt-x mt-x">
+            <div class="rock-coin">
+              <img id="rock" class="choice img-50" src="./img/icon-rock.svg">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- layer to show once game begins / player clicks  -->
+    <section id="play-section" class="play-section">
+      <div class="container">
+        <div class="row">
+
+          <!-- Player selection -->
+          <div class="player-selection col-sm-4">
+            <h3 class="selection-header">You picked</h3>
+            <div id="p-rock" class="rock-coin">
+              <img class="img-50" src="./img/icon-rock.svg">
+            </div>
+            <div id="p-paper" class="paper-coin">
+              <img class="img-50" src="./img/icon-paper.svg">
+            </div>
+            <div id="p-scissors" class="scissors-coin">
+              <img class="img-50" src="./img/icon-scissors.svg">
+            </div>
+          </div>
+
+          <!-- Winner -->
+          <div id="result" class="outcome col-sm-4">
+            <h2 class="draw outcome-header d-none">Draw</h2>
+            <h2 class="win outcome-header d-none">You win</h2>
+            <h2 class="lose outcome-header d-none">You lose</h2>
+
+            <!-- play again button -->
+            <button id="playAgain" class="play-again-btn">Play again</button>
+
+            <!-- restart button -->
+            <!-- <button id="restart" class="restart-btn">Restart</button> -->
+          </div>
+
+
+          <!-- Computer selection -->
+          <div class="computer-selection col-sm-4">
+            <h3 class="selection-header">The house picked</h3>
+            <div id="c-rock" class="rock-coin">
+              <img class="img-50" src="./img/icon-rock.svg">
+            </div>
+            <div id="c-paper" class="paper-coin">
+              <img class="img-50" src="./img/icon-paper.svg">
+            </div>
+            <div id="c-scissors" class="scissors-coin">
+              <img class="img-50" src="./img/icon-scissors.svg">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-footer">
+          <!-- rules button -->
+          <button id="rules" class="rules-btn">Rules</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Modal -->
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="rules-header">Rules</h1>
+        <button>
+          <img id="close-modal-btn" src="./img/close-modal.svg" alt="">
+        </button>
+      </div>
+      <div class="modal-body">
+        <img src="./img/image-rules.svg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+
+</html>
