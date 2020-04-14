@@ -21,7 +21,7 @@ const computerScore = document.getElementsByClassName("computer-score")[0];
 // const result = document.getElementById("result");
 const restart = document.getElementById("restart");
 
-const playAgain = document.getElementById("playAgain");
+const playAgainBtn = document.getElementById("playAgain");
 
 const rules = document.getElementById("rules");
 
@@ -35,17 +35,21 @@ const modalClose = document.getElementById("close-modal-btn");
 const pRock = document.getElementById("p-rock");
 const pPaper = document.getElementById("p-paper");
 const pScissors = document.getElementById("p-scissors");
+const pSlide = document.getElementsByClassName("player-slide-left")[0];
+
 
 
 // Computer choices 
 const cRock = document.getElementById("c-rock");
 const cPaper = document.getElementById("c-paper");
 const cScissors = document.getElementById("c-scissors");
+const cSlide = document.getElementsByClassName("house-slide-right")[0];
 
 // outcomes 
 const draw = document.getElementsByClassName("draw")[0];
 const win = document.getElementsByClassName("win")[0];
 const lose = document.getElementsByClassName("lose")[0];
+
 
 
 
@@ -55,24 +59,21 @@ const scoreboard = {
   computer: 0
 }
 
-
 // winner background
 const winnerBg = document.getElementsByClassName("winner-bg")[0];
-
 
 // store values for later 
 let playerClicked = ""
 let computerClicked = ""
 let finalOutcome = ""
 
-// DisplayNoneToggle 
-
-const displayNoneToggle = function (hideToggle1, hideToggle2, hideToggle3, hideToggle4, hideToggle5) {
+// Toggle display none on and off
+const displayNoneToggle = function (hideToggle1, hideToggle2, hideToggle3, hideToggle4, hideToggle5, hideToggle6) {
 
   hideToggle1.classList.toggle("d-none");
 
   if (hideToggle2) {
-    // if another paramater listed
+    // if another parameter listed
     hideToggle2.classList.toggle("d-none");
   }
 
@@ -87,6 +88,10 @@ const displayNoneToggle = function (hideToggle1, hideToggle2, hideToggle3, hideT
   if (hideToggle5) {
     hideToggle5.classList.toggle("d-none");
   }
+
+  if (hideToggle6) {
+    hideToggle5.classList.toggle("d-none");
+  }
 };
 
 // when page is loaded, hide the following: 
@@ -95,47 +100,57 @@ displayNoneToggle(pRock, pPaper, pScissors);
 displayNoneToggle(cRock, cPaper, cScissors);
 
 
-// Play game
-
-
+// Play game (once player makes a selection)
 // create a play function using (e) event parameter to target the id of what we click. doing so starts the game
-
 
 function play(e) {
 
   // Player choice - what player clicks will be saved as the playerChoice variable
-  // Test playerChoice with console.log(e.target.id);
   const playerChoice = e.target.id;
-
   playerClicked = playerChoice;
 
-  console.log("playerClicked stored as " + playerChoice)
-
-  // After selection made, Choices section display none is toggled on and playSection toggled off
+  // After selection made, Choices section display none is toggled ON and playSection toggled OFF
   displayNoneToggle(choicesSection, playSection)
 
   // player-selection is now displayed  
   displayPlayerClick(playerChoice);
 
-  // Computer choice 
   const computerChoice = getComputerChoice();
+
+  // Computer choice 
+  setTimeout(function () {
+    displayNoneToggle(computerSelection);
+
+  }, 1 * 1000);
+
 
   // console.log(playerChoice, computerChoice, winner);
   const winner = getWinner(playerChoice, computerChoice);
 
+  setTimeout(function () {
+    showWinner(winner, computerChoice);
+  }, 3.5 * 1000);
 
-  console.log("The value of winner is " + winner);
 
-  showWinner(winner, computerChoice);
+  setTimeout(function () {
+    displayNoneToggle(outcome);
+    console.log("The value of outcome is +" + outcome);
+  }, 3.5 * 1000);
 
-  displayNoneToggle(outcome);
-  console.log("The value of outcome is +" + outcome);
 
   finalOutcome = winner;
 
-  showWinnerBg(winner, playerChoice, computerChoice);
+  // slide animation
+  setTimeout(function () {
+    slideToggle();
+  }, 2 * 1000);
 
-  // showScore
+  // winner background
+  setTimeout(function () {
+    showWinnerBg(winner, playerChoice, computerChoice);
+  }, 3 * 1000);
+
+
 }
 
 
@@ -166,8 +181,10 @@ function displayPlayerClick(playerSelected) {
 // computer choice, display none what wasn't chosen
 function getComputerChoice() {
 
+  // setTimeout(function () {
+
   // toggle on ComputerSelection
-  displayNoneToggle(computerSelection);
+  // displayNoneToggle(computerSelection);
 
   const random = Math.random();
   if (random < 0.34) {
@@ -189,10 +206,14 @@ function getComputerChoice() {
     return 'scissors';
   }
 
+  // }, 400);
 }
 
 // Logic to determine game winner 
+
 function getWinner(player, computer) {
+
+  // setTimeout(function () {
   if (player === computer) {
     return 'draw'
   } else if (player === 'rock') {
@@ -216,20 +237,21 @@ function getWinner(player, computer) {
       return 'player wins';
     }
   }
+  // }, 500);
 }
 
 
-// Show winner div
-
-// create a function which displays the results and adds their to their score
+// Show winner 
+// create a function which displays the results and updates score
 
 function showWinner(winner) {
 
+  // setTimeout(function () {
+
   if (winner === 'player wins') {
-    // increment player score 
     console.log(winner + " is toggled on")
     displayNoneToggle(win)
-    // showWinnerBg()
+    // increment player score 
     scoreboard.player++
     playerScore.innerHTML = `<p>${scoreboard.player}</p>`;
   } else if (winner === 'computer wins') {
@@ -242,11 +264,24 @@ function showWinner(winner) {
     displayNoneToggle(draw)
   }
 
+  // }, 2000);
+
 }
+
+
+// slideToggle 
+
+function slideToggle() {
+  playerSelection.classList.toggle("player-slide-left");
+  computerSelection.classList.toggle("house-slide-right");
+}
+
 
 // Winner background 
 
 function showWinnerBg(winner, playerClicked, computerClicked) {
+
+  // setTimeout(function () {
   if (winner === 'player wins') {
     if (playerClicked === 'rock') {
       pRock.classList.add("winner-bg");
@@ -265,7 +300,7 @@ function showWinnerBg(winner, playerClicked, computerClicked) {
       cScissors.classList.add("winner-bg");
     }
   }
-
+  // }, 2000);
 }
 
 
@@ -319,11 +354,16 @@ function playAgainGame() {
     displayNoneToggle(lose)
 
   } else {
-    console.log("draw div is toggled off, value of outcome is " + outcome)
+    console.log("draw div is toggled off, value of outcome is " + finalOutcome)
     displayNoneToggle(draw)
   }
 
+  // toggle off slide animation
+
+  slideToggle()
+
   hideWinnerBg(finalOutcome, playerClicked, computerClicked);
+
 
 }
 
@@ -407,6 +447,6 @@ modalClose.addEventListener('click', clearModalOther);
 // restart.addEventListener('click', restartGame);
 
 // play again option 
-playAgain.addEventListener('click', playAgainGame);
+playAgainBtn.addEventListener('click', playAgainGame);
 
 

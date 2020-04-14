@@ -350,15 +350,18 @@ body {
   padding-bottom: 4rem;
   font-size: 2rem;
   font-weight: 300;
-
+  white-space: nowrap;
 }
 
 .player-selection, .computer-selection, .outcome {
   display: flex;
+  position: absolute;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+  transition: all 1.5s ease-out;
+  
 }
 
 .winner-bg:after {
@@ -373,8 +376,27 @@ body {
 }
 
 
+.player-selection {
+  left: 25%;
+  width: 25%;
+}
 
+.player-slide-left {
+  left: 10%;
+}
 
+.computer-selection {
+  right: 25%;
+  width: 25%;
+}
+
+.house-slide-right {
+  right: 10%;
+}
+
+.outcome {
+  margin-top: 6rem;
+}
 
 /* footer */
 
@@ -392,6 +414,8 @@ body {
 }
 
 
+
+/* Tablet */
 
 @media(max-width: 650px) {
   .choice {
@@ -414,10 +438,11 @@ body {
     border-radius: 4rem;
   }
 
-
 }
 
-@media (max-width: 375px) {
+
+
+@media (max-width: 426px) {
   .img-container {
     padding: 0;
   }
@@ -429,6 +454,18 @@ body {
     padding: 10px 30px;
   }
 
+  .outcome {
+    position: absolute;
+    top: 500px;
+  }
+
+  .selection-header {
+    padding-bottom: 0;
+    padding-top: 4rem;
+    font-size: 1rem;
+    font-weight: 300;
+    order: 2;
+  }
 
   .rock-coin, .paper-coin, .scissors-coin {
     height: 4rem;
@@ -437,19 +474,39 @@ body {
   }
 
   .choices::before {
-    content: "";
-    position: absolute;
-    top: -90px;
-    bottom: 0px;
-    right: 0rem;
-    left: 0px;
-    z-index: -2;
-    background-image: url(../img/bg-triangle.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: scale(0.75);
+   transform: scale(0.75);
+}
 
+.winner-bg:after {
+  top: -145px;
+  left: -145px;
+  width: 350px;
+  height: 350px;
+  
+} 
 
+.player-selection {
+  left: 0%;
+  width: 50%;
+  margin-top: 4rem;
+}
+
+.player-slide-left {
+  left: 0%;
+}
+
+.computer-selection {
+  right: 0%;
+  width: 50%;
+  margin-top: 4rem;
+}
+
+.house-slide-right {
+  right: 0%;
+}
+
+.outcome {
+  margin-top: 1rem;
 }
 
 }
