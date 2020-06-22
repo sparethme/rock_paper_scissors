@@ -18,25 +18,15 @@ const playerScore = document.getElementsByClassName("player-score")[0];
 const computerScore = document.getElementsByClassName("computer-score")[0];
 
 // result of each game
-// const result = document.getElementById("result");
 const restart = document.getElementById("restart");
 
 const playAgainBtn = document.getElementById("playAgain");
-
-const rules = document.getElementById("rules");
-
-
-// modal
-const modal = document.querySelector(".modal");
-const modalClose = document.getElementById("close-modal-btn");
-
 
 // Player choice to be displayed
 const pRock = document.getElementById("p-rock");
 const pPaper = document.getElementById("p-paper");
 const pScissors = document.getElementById("p-scissors");
 const pSlide = document.getElementsByClassName("player-slide-left")[0];
-
 
 
 // Computer choices 
@@ -49,8 +39,6 @@ const cSlide = document.getElementsByClassName("house-slide-right")[0];
 const draw = document.getElementsByClassName("draw")[0];
 const win = document.getElementsByClassName("win")[0];
 const lose = document.getElementsByClassName("lose")[0];
-
-
 
 
 // Keep score with a scoreboard object
@@ -94,39 +82,32 @@ const displayNoneToggle = function (hideToggle1, hideToggle2, hideToggle3, hideT
   }
 };
 
+
 // when page is loaded, hide the following: 
-displayNoneToggle(modal, playSection, playerSelection, computerSelection, outcome);
-displayNoneToggle(pRock, pPaper, pScissors);
-displayNoneToggle(cRock, cPaper, cScissors);
+displayNoneToggle(playSection, playerSelection, computerSelection, outcome); //
+displayNoneToggle(pRock, pPaper, pScissors); //player choice to be displayed
+displayNoneToggle(cRock, cPaper, cScissors); //computer choice 
 
 
 // Play game (once player makes a selection)
 // create a play function using (e) event parameter to target the id of what we click. doing so starts the game
 
 function play(e) {
+  let playerChoice = e.target.id;// Player choice - what player clicks 
+  playerClicked = playerChoice; //choice will be saved as the playerClicked variable
+  displayNoneToggle(choicesSection, playSection) // Choices section toggled ON and playSection toggled OFF
+  displayPlayerClick(playerChoice); // player-selection is now displayed  
 
-  // Player choice - what player clicks will be saved as the playerChoice variable
-  const playerChoice = e.target.id;
-  playerClicked = playerChoice;
-
-  // After selection made, Choices section display none is toggled ON and playSection toggled OFF
-  displayNoneToggle(choicesSection, playSection)
-
-  // player-selection is now displayed  
-  displayPlayerClick(playerChoice);
-
-  const computerChoice = getComputerChoice();
+  let computerChoice = getComputerChoice();
 
   // Computer choice 
   setTimeout(function () {
     displayNoneToggle(computerSelection);
-
   }, 1 * 1000);
 
+  let winner = getWinner(playerChoice, computerChoice);
 
-  // console.log(playerChoice, computerChoice, winner);
-  const winner = getWinner(playerChoice, computerChoice);
-
+  // show winner
   setTimeout(function () {
     showWinner(winner, computerChoice);
   }, 3.5 * 1000);
@@ -136,7 +117,6 @@ function play(e) {
     displayNoneToggle(outcome);
     console.log("The value of outcome is +" + outcome);
   }, 3.5 * 1000);
-
 
   finalOutcome = winner;
 
@@ -150,11 +130,7 @@ function play(e) {
     showWinnerBg(winner, playerChoice, computerChoice);
   }, 3 * 1000);
 
-
 }
-
-
-
 
 // display what player chose, display none the other choices
 function displayPlayerClick(playerSelected) {
@@ -174,17 +150,11 @@ function displayPlayerClick(playerSelected) {
     console.log("You selected " + playerSelected);
     displayNoneToggle(pScissors);
   }
-
 }
 
 
 // computer choice, display none what wasn't chosen
 function getComputerChoice() {
-
-  // setTimeout(function () {
-
-  // toggle on ComputerSelection
-  // displayNoneToggle(computerSelection);
 
   const random = Math.random();
   if (random < 0.34) {
@@ -205,15 +175,11 @@ function getComputerChoice() {
     console.log("computer selected " + computerClicked)
     return 'scissors';
   }
-
-  // }, 400);
 }
 
 // Logic to determine game winner 
 
 function getWinner(player, computer) {
-
-  // setTimeout(function () {
   if (player === computer) {
     return 'draw'
   } else if (player === 'rock') {
@@ -237,17 +203,12 @@ function getWinner(player, computer) {
       return 'player wins';
     }
   }
-  // }, 500);
 }
 
 
 // Show winner 
 // create a function which displays the results and updates score
-
 function showWinner(winner) {
-
-  // setTimeout(function () {
-
   if (winner === 'player wins') {
     console.log(winner + " is toggled on")
     displayNoneToggle(win)
@@ -255,33 +216,22 @@ function showWinner(winner) {
     scoreboard.player++
     playerScore.innerHTML = `<p>${scoreboard.player}</p>`;
   } else if (winner === 'computer wins') {
-    console.log(winner + " is toggled on")
     displayNoneToggle(lose)
     scoreboard.player--
     playerScore.innerHTML = `<p>${scoreboard.player}</p>`;
   } else {
-    console.log(winner + " is toggled on")
     displayNoneToggle(draw)
   }
-
-  // }, 2000);
-
 }
 
-
-// slideToggle 
-
+// Animation slideToggle 
 function slideToggle() {
   playerSelection.classList.toggle("player-slide-left");
   computerSelection.classList.toggle("house-slide-right");
 }
 
-
 // Winner background 
-
 function showWinnerBg(winner, playerClicked, computerClicked) {
-
-  // setTimeout(function () {
   if (winner === 'player wins') {
     if (playerClicked === 'rock') {
       pRock.classList.add("winner-bg");
@@ -300,75 +250,55 @@ function showWinnerBg(winner, playerClicked, computerClicked) {
       cScissors.classList.add("winner-bg");
     }
   }
-  // }, 2000);
 }
 
-
-
-// Play Again 
-
+// Play Again / Return to starting state
 function playAgainGame() {
-
   // hide player- and computer-selection and winner results
   displayNoneToggle(choicesSection, playSection, playerSelection, computerSelection);
-
   // re hide what player selected
   if (playerClicked === 'rock') {
-    console.log("hidding " + playerClicked);
+
     displayNoneToggle(pRock);
-
   } else if (playerClicked === 'paper') {
-    console.log("hidding " + playerClicked);
-    displayNoneToggle(pPaper);
 
+    displayNoneToggle(pPaper);
   } else {
-    console.log("hidding " + playerClicked);
+
     displayNoneToggle(pScissors);
   }
 
   // hide what computer selected 
-
   if (computerClicked === 'rock') {
-    console.log("hidding computer's " + computerClicked);
+    // console.log("hidding computer's " + computerClicked);
     displayNoneToggle(cRock);
-
   } else if (computerClicked === 'paper') {
-    console.log("hidding computer's " + computerClicked);
+    // console.log("hidding computer's " + computerClicked);
     displayNoneToggle(cPaper);
-
   } else {
-    console.log("hidding computer's " + computerClicked);
+    // console.log("hidding computer's " + computerClicked);
     displayNoneToggle(cScissors);
   }
 
   // toggle outcome div
   displayNoneToggle(outcome)
-
   if (finalOutcome === 'player wins') {
-
     console.log("win div is toggled off, value of outcome is " + finalOutcome)
     displayNoneToggle(win)
-
   } else if (finalOutcome === 'computer wins') {
     console.log("lose div is toggled off, value of outcome is " + finalOutcome)
     displayNoneToggle(lose)
-
   } else {
     console.log("draw div is toggled off, value of outcome is " + finalOutcome)
     displayNoneToggle(draw)
   }
 
   // toggle off slide animation
-
   slideToggle()
-
   hideWinnerBg(finalOutcome, playerClicked, computerClicked);
-
-
 }
 
 // hide winner bg 
-
 function hideWinnerBg(winner, playerClicked, computerClicked) {
   if (winner === 'player wins') {
     if (playerClicked === 'rock') {
@@ -390,8 +320,6 @@ function hideWinnerBg(winner, playerClicked, computerClicked) {
   }
 }
 
-
-
 // restart reset score game / score
 function restartGame() {
   playAgainGame();
@@ -401,47 +329,11 @@ function restartGame() {
   // computerScore.innerHTML = `<p>${scoreboard.computer}</p>`;
 }
 
-
-// open modal
-
-function openModal(e) {
-  if (e.target == rules) {
-    displayNoneToggle(modal)
-    console.log(rules)
-  }
-
-}
-
-// clear modal
-function clearModal(e) {
-  if (e.target == modal) {
-    displayNoneToggle(modal)
-  }
-}
-// why won't this work in the other clearModal function? 
-function clearModalOther(e) {
-  if (e.target == modalClose) {
-    displayNoneToggle(modal)
-  }
-}
-
-
 // Event listeners 
 
 // for loop also possible but use a forEach works too. This allows us to know which one was clicked. And once we click, thats when the play function starts 
-
 // adding event listener to each .choice class. when one of the choices is clicked, the play function begins
 choices.forEach(choice => choice.addEventListener('click', play));
-
-
-
-
-// Modal event listener 
-rules.addEventListener('click', openModal);
-
-window.addEventListener('click', clearModal);
-modalClose.addEventListener('click', clearModalOther);
-
 
 // restart game option 
 // restart.addEventListener('click', restartGame);
